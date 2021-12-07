@@ -12,7 +12,7 @@ const usePost = () => {
     const fetchingData = async () => {
       const data = await fetchData(perPage, pageRef.current);
       if (data.length === 0) return setIsLoading(false);
-
+      console.log(data);
       setTimeout(() => {
         setIsLoading(false);
         setListData(listData => [

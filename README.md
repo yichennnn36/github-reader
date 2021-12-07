@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)！
 
+## Demo
+demo: [https://yichennnn36.github.io/github-reader/](https://yichennnn36.github.io/github-reader/)
+
 ## Installation
 
 ```

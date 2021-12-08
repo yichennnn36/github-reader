@@ -4,7 +4,7 @@ import { Card } from 'antd';
 import Loading from '../Loading/Loading';
 import usePost from '../../hooks/usePost';
 
-const Header = () => {
+const List = () => {
   const ref = useRef();
   const {
     listData,
@@ -70,4 +70,4 @@ const Header = () => {
   )
 };
 
-export default Header;
+export default List;

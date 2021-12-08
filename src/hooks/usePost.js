@@ -8,30 +8,51 @@ const usePost = () => {
   const totalPage = useRef(0);
   const perPage = 4;
 
-  const getData = useCallback(() => {
-    const fetchingData = async () => {
+  const fetchingData = async () => {
+    try {
       const data = await fetchData(perPage, pageRef.current);
       if (data.length === 0) return setIsLoading(false);
-      console.log(data);
-      setTimeout(() => {
-        setIsLoading(false);
-        setListData(listData => [
-          ...listData,
-          ...data
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchingDataCount = async () => {
+    try {
+      const response = await fetchDataCount();
+      const totalCount = await response.length;
+      totalPage.current = Math.ceil(totalCount / perPage);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getData = useCallback(() => {
+    const fetchingAllData = async () => {
+      try {
+        const [data] = await Promise.all([
+          fetchingData(),
+          fetchingDataCount()
         ]);
-      }, 500);
+        if (data.length === 0) return setIsLoading(false);
+
+        setTimeout(() => {
+          setIsLoading(false);
+          setListData(listData => [
+            ...listData,
+            ...data
+          ]);
+        }, 500);
+      } catch (error) {
+        alert('發生錯誤');
+      }
     };
-    fetchingData();
+    fetchingAllData();
   }, []);
 
   useEffect(() => {
     getData();
-    const getDataCount = async () => {
-      const response = await fetchDataCount();
-      const totalCount = await response.length;
-      totalPage.current = Math.ceil(totalCount / perPage);
-    };
-    getDataCount();
   }, [getData]);
 
   return {
